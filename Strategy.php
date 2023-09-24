@@ -7,7 +7,6 @@ interface ITree
 {
 }
 
-
 /**
  * Срыв листка
  */
@@ -97,22 +96,25 @@ class Pine implements ITree, IGetLeafAction
 /**
  * Берёза
  */
-class Birch implements ITree, IGetLeafAction
+class Birch implements ITree, IGetLeafAction, IFallLeavesAction
 {
     public IGetLeafAction $getLeafAction;
     public IFallLeavesAction $fallLeafAction;
 
     public function __construct()
     {
-        $this->getLeafAction = new GetConiferousLeafAction();
+        $this->getLeafAction = new GetDeciduousLeafAction();
 
-        $this->fallLeafAction = new GetConiferousFallLeavesAction();
+        $this->fallLeafAction = new GetDeciduousFallLeavesAction();
     }
 
     public function getLeaf(): void
     {
         $this->getLeafAction->getLeaf();
+    }
 
+    public function fallLeaves(): void
+    {
         $this->fallLeafAction->fallLeaves();
     }
 }
@@ -120,18 +122,27 @@ class Birch implements ITree, IGetLeafAction
 /**
  * Дуб
  */
-class Oak implements ITree, IGetLeafAction
+class Oak implements ITree, IGetLeafAction, IFallLeavesAction
 {
     public IGetLeafAction $getLeafAction;
+
+    public IFallLeavesAction $fallLeafAction;
 
     public function __construct()
     {
         $this->getLeafAction = new GetDeciduousLeafAction();
+
+        $this->fallLeafAction = new GetDeciduousFallLeavesAction();
     }
 
     public function getLeaf(): void
     {
         $this->getLeafAction->getLeaf();
+    }
+
+    public function fallLeaves(): void
+    {
+        $this->fallLeafAction->fallLeaves();
     }
 }
 
@@ -165,7 +176,6 @@ class AppleTree implements ITree, IGetLeafAction,IFallLeavesAction, IGetFruitAct
     }
 }
 
-
 /**
  * Лиственница
  */
@@ -191,3 +201,19 @@ class Larch implements ITree, IGetLeafAction, IFallLeavesAction
         $this->fallLeafAction->fallLeaves();
     }
 }
+
+$lisaBirch = new Birch();
+$lisaBirch->fallLeaves();
+echo "\n";
+$lisaBirch->getLeaf();
+echo "\n\n";
+
+$denLarch = new Larch();
+$denLarch->getLeaf();
+echo "\n";
+$denLarch->fallLeaves();
+echo "\n\n";
+
+$bobPine = new Pine();
+$bobPine->getLeaf();
+echo "\n\n";
