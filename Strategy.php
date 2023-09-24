@@ -149,7 +149,7 @@ class Oak implements ITree, IGetLeafAction, IFallLeavesAction
 /**
  * Яблоня
  */
-class AppleTree implements ITree, IGetLeafAction,IFallLeavesAction, IGetFruitAction
+class AppleTree implements ITree, IGetLeafAction, IFallLeavesAction, IGetFruitAction
 {
     public IGetLeafAction $leafAction;
     public IFallLeavesAction $fallLeavesAction;
@@ -165,6 +165,7 @@ class AppleTree implements ITree, IGetLeafAction,IFallLeavesAction, IGetFruitAct
     {
         $this->leafAction->getLeaf();
     }
+
     public function fallLeaves(): void
     {
         $this->fallLeavesAction->fallLeaves();
